@@ -3,10 +3,11 @@ import type { FilterValues, Task } from "./App";
 import { Button } from "./Button";
 
 type Props = {
+  todolistId: string;
   title: string;
   tasks: Task[];
   deleteTask: (taskId: string) => void;
-  changeFilter: (filter: FilterValues) => void;
+  changeFilter: (todolistId: string, filter: FilterValues) => void;
   createTask: (title: string) => void;
   changeTaskStatus: (taskId: string, isDone: boolean) => void;
   filter: FilterValues;
@@ -14,6 +15,7 @@ type Props = {
 
 export const TodolistItem = (props: Props) => {
   const {
+    todolistId,
     title,
     tasks,
     deleteTask,
@@ -45,6 +47,10 @@ export const TodolistItem = (props: Props) => {
     if (event.key === "Enter") {
       createTaskHandler();
     }
+  };
+
+  const changeFilterHandler = (filter: FilterValues) => {
+    changeFilter(todolistId, filter);
   };
 
   let filteredTasks = tasks;
@@ -102,17 +108,17 @@ export const TodolistItem = (props: Props) => {
         <Button
           className={filter === "all" ? "active-filter" : ""}
           title={"All"}
-          onClick={() => changeFilter("all")}
+          onClick={() => changeFilterHandler("all")}
         />
         <Button
           className={filter === "active" ? "active-filter" : ""}
           title={"Active"}
-          onClick={() => changeFilter("active")}
+          onClick={() => changeFilterHandler("active")}
         />
         <Button
           className={filter === "completed" ? "active-filter" : ""}
           title={"Completed"}
-          onClick={() => changeFilter("completed")}
+          onClick={() => changeFilterHandler("completed")}
         />
       </div>
     </div>

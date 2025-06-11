@@ -53,13 +53,7 @@ export const TodolistItem = (props: Props) => {
     changeFilter(todolistId, filter);
   };
 
-  let filteredTasks = tasks;
-  if (filter === "active") {
-    filteredTasks = tasks.filter((task) => !task.isDone);
-  }
-  if (filter === "completed") {
-    filteredTasks = tasks.filter((task) => task.isDone);
-  }
+
 
   return (
     <div>
@@ -78,7 +72,7 @@ export const TodolistItem = (props: Props) => {
         <p>Тасок нет</p>
       ) : (
         <ul>
-          {filteredTasks.map((task) => {
+          {tasks.map((task) => {
             const deleteTaskHandler = () => {
               deleteTask(task.id);
             };

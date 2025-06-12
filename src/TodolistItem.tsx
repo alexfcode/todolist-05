@@ -9,8 +9,12 @@ type Props = {
   deleteTask: (todolistId: string, taskId: string) => void;
   changeFilter: (todolistId: string, filter: FilterValues) => void;
   createTask: (todolistId: string, title: string) => void;
-  changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void;
-  deleteTodolist: (todolistId: string) => void
+  changeTaskStatus: (
+    todolistId: string,
+    taskId: string,
+    isDone: boolean
+  ) => void;
+  deleteTodolist: (todolistId: string) => void;
   filter: FilterValues;
 };
 
@@ -24,7 +28,7 @@ export const TodolistItem = (props: Props) => {
     createTask,
     changeTaskStatus,
     filter,
-    deleteTodolist
+    deleteTodolist,
   } = props;
 
   const [taskTitle, setTaskTitle] = useState("");
@@ -55,14 +59,19 @@ export const TodolistItem = (props: Props) => {
     changeFilter(todolistId, filter);
   };
 
-const deleteTodolistHandler = () => {
-  deleteTodolist(todolistId)
-}
+  const deleteTodolistHandler = () => {
+    deleteTodolist(todolistId);
+  };
 
   return (
     <div>
-      <h3>{title}</h3>
-      <Button title="x" onClick={deleteTodolistHandler}/>
+      <div>
+        <h3>
+          {title}
+          <Button title="x" onClick={deleteTodolistHandler} />
+        </h3>
+      </div>
+
       <div>
         <input
           className={error ? "error" : ""}
@@ -78,7 +87,6 @@ const deleteTodolistHandler = () => {
       ) : (
         <ul>
           {tasks.map((task) => {
-
             const deleteTaskHandler = () => {
               deleteTask(todolistId, task.id);
             };

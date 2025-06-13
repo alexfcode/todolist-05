@@ -62,9 +62,6 @@ export const App = () => {
     taskId: string,
     isDone: boolean
   ) => {
-    // const newState = tasks.map((task) =>
-    //   task.id == taskId ? { ...task, isDone } : task
-    // );
     setTasks({
       ...tasks,
       [todolistId]: tasks[todolistId].map((task) =>
@@ -75,34 +72,20 @@ export const App = () => {
 
   const deleteTodolist = (todolistId: string) => {
 setTodolists(todolists.filter(tl => tl.id !== todolistId))
-setTasks({...tasks, [todolistId] : []})
+delete tasks[todolistId]
+setTasks({...tasks})
   }
   
-
-  type todolistType = {
-    id: string;
-    title: string;
-    filter: FilterValues;
-  };
 
   return (
     <div className="app">
       {todolists.map((tl) => {
-        let filteredTasks = tasks[tl.id];
-
-        if (tl.filter === "active") {
-          filteredTasks = tasks[tl.id].filter((task) => !task.isDone);
-        }
-        if (tl.filter === "completed") {
-          filteredTasks = tasks[tl.id].filter((task) => task.isDone);
-        }
-
         return (
           <TodolistItem
             key={tl.id}
             todolistId={tl.id}
             title={tl.title}
-            tasks={filteredTasks}
+            tasks={tasks[tl.id]}
             deleteTask={deleteTask}
             changeFilter={changeFilter}
             createTask={createTask}

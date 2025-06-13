@@ -63,6 +63,14 @@ export const TodolistItem = (props: Props) => {
     deleteTodolist(todolistId);
   };
 
+let filteredTasks = tasks
+  if (filter === "active") {
+    filteredTasks = tasks.filter(t => !t.isDone)}
+  if (filter === "completed") 
+    filteredTasks = tasks.filter(t => t.isDone)
+  
+
+
   return (
     <div>
       <div>
@@ -82,11 +90,11 @@ export const TodolistItem = (props: Props) => {
         <Button title={"+"} onClick={createTaskHandler} />
         {error && <div className={"error-message"}>{error}</div>}
       </div>
-      {tasks.length === 0 ? (
+      {filteredTasks.length === 0 ? (
         <p>Тасок нет</p>
       ) : (
         <ul>
-          {tasks.map((task) => {
+          {filteredTasks.map((task) => {
             const deleteTaskHandler = () => {
               deleteTask(todolistId, task.id);
             };
